@@ -1,4 +1,7 @@
 @media screen and (max-width: 600px) {
+    canvas {
+        touch-action: none; /* Prevent panning and zooming */
+      }
     .slider-container {
         display: flex;
         flex-direction: column;
