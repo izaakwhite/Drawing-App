@@ -1,5 +1,9 @@
 body {
-  background-color: #f4f4f4;
+ /* background-image: url('../public/WhatSiberiaLooksLikeIMO.png'); /* Update the path to your PNG image */
+/*background-size: cover; /* Cover the entire viewport */
+ /* background-repeat: no-repeat; /* Prevent the image from repeating */
+  /*background-attachment: fixed; /* Fix the image so it doesn’t scroll with the content */
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
   display: flex;
@@ -20,7 +24,7 @@ body {
 }
 
 canvas {
-  color: #fff;
+  color: #ffffff;
   border: 1px solid #000;
   width: 100%;
   height: 100%;
@@ -60,6 +64,8 @@ canvas {
 }
 
 .slider-label {
+  /*text-shadow: 0 0 3px #000000;*/
+  color: rgb(0, 0, 0);
   margin-bottom: 5px;
   font-size: 16px;
 }
@@ -68,3 +74,15 @@ canvas {
   width: 150px;
 }
 
+.save-button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #c9c9c9;
+  color: #000000;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  margin-top: 10px;
+  margin-left: 5px
+}

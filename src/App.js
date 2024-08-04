@@ -47,6 +47,15 @@ export default function App() {
     setBrushSize(newSize);
     contextReference.current.lineWidth = newSize;
   };
+  
+  const saveCanvasAsImage = () => {
+    const canvas = canvasReference.current;
+    const image = canvas.toDataURL("image/png");
+    const link = document.createElement('a');
+    link.href = image;
+    link.download = 'canvas.png';
+    link.click();
+  };
 
   useEffect(() => {
     const canvas = canvasReference.current;
@@ -96,6 +105,10 @@ export default function App() {
           Clear Drawing
         </button>
 
+        <button className="save-button" onClick={saveCanvasAsImage}>
+          Save as PNG
+        </button>
+
         <div className="slider-container">
           <label className="slider-label" htmlFor="brushSize">
             Brush Size: {brushSize}
@@ -110,7 +123,6 @@ export default function App() {
             onChange={handleBrushSizeChange}
           />
         </div>
-        
       </div>
     </div>
   );
