@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import './App.css';
+import './media-queries.css';
 
 export default function App() {
   const colors = ["black", "red", "orange", "green", "blue", "purple", "yellow", "pink", "white"];
@@ -20,27 +21,30 @@ export default function App() {
   };
 
   const beginDraw = (e) => {
+    e.preventDefault();
+    const rect = canvasReference.current.getBoundingClientRect();
+    const x = e.touches ? e.touches[0].clientX - rect.left : e.nativeEvent.offsetX;
+    const y = e.touches ? e.touches[0].clientY - rect.top : e.nativeEvent.offsetY;
     contextReference.current.beginPath();
-    contextReference.current.moveTo(
-      e.nativeEvent.offsetX,
-      e.nativeEvent.offsetY
-    );
+    contextReference.current.moveTo(x, y);
     setIsPressed(true);
   };
-
+  
   const updateDraw = (e) => {
     if (!isPressed) return;
-
-    contextReference.current.lineTo(
-      e.nativeEvent.offsetX,
-      e.nativeEvent.offsetY
-    );
+    e.preventDefault();
+    const rect = canvasReference.current.getBoundingClientRect();
+    const x = e.touches ? e.touches[0].clientX - rect.left : e.nativeEvent.offsetX;
+    const y = e.touches ? e.touches[0].clientY - rect.top : e.nativeEvent.offsetY;
+    contextReference.current.lineTo(x, y);
     contextReference.current.stroke();
   };
+  
 
   const endDraw = () => {
     contextReference.current.closePath();
     setIsPressed(false);
+    //console.log("TE")
   };
 
   const handleBrushSizeChange = (e) => {
@@ -105,10 +109,16 @@ export default function App() {
       <div className="canvas-container">
         <canvas
           ref={canvasReference}
+          
           onMouseDown={beginDraw}
           onMouseMove={updateDraw}
           onMouseUp={endDraw}
           onMouseLeave={endDraw}
+
+          onTouchStart={beginDraw}
+          onTouchMove={updateDraw}
+          onTouchEnd={endDraw}
+          
         />
         <button className="clr-button" onClick={clearCanvas}>
           Clear Drawing
