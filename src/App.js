@@ -6,6 +6,7 @@ export default function App() {
 
   const canvasReference = useRef(null);
   const contextReference = useRef(null);
+  const brushSizeReference = useRef(5);
 
   const [isPressed, setIsPressed] = useState(false);
   const [brushSize, setBrushSize] = useState(5);
@@ -45,9 +46,10 @@ export default function App() {
   const handleBrushSizeChange = (e) => {
     const newSize = e.target.value;
     setBrushSize(newSize);
+    brushSizeReference.current = newSize;
     contextReference.current.lineWidth = newSize;
   };
-  
+
   const saveCanvasAsImage = () => {
     const canvas = canvasReference.current;
     const image = canvas.toDataURL("image/png");
@@ -62,12 +64,19 @@ export default function App() {
     const context = canvas.getContext("2d");
     context.lineCap = "round";
     context.strokeStyle = "black";
-    context.lineWidth = brushSize;
+    context.lineWidth = brushSizeReference.current;
     contextReference.current = context;
 
     const resizeCanvas = () => {
+      const tempCanvas = document.createElement('canvas');
+      const tempContext = tempCanvas.getContext('2d');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      tempContext.drawImage(canvas, 0, 0);
+
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
+      context.drawImage(tempCanvas, 0, 0);
     };
 
     window.addEventListener('resize', resizeCanvas);
