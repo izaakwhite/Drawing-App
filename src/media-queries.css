@@ -19,6 +19,7 @@
       }
       
       .slider {
+        touch-action: none;
         width: 95px;
       }
       .btn-colors {
