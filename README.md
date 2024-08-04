@@ -4,4 +4,4 @@ This Is a simple React.js project utilizing the canvas feature of React to showc
 
 ## Deployment link
 
-https://paintjsx.netlify.app/
+<https://paintjsx.netlify.app/>
