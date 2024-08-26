@@ -96,7 +96,7 @@ export default function App() {
           <button
             className="btn-colors"
             key={color}
-            onClick={() => { contextReference.current.strokeStyle = color; setIsPressed(false); }}
+            onClick={() => { contextReference.current.strokeStyle = color; setIsPressed(false); endDraw() }}
             style={{
               backgroundColor: color,
               color: color === 'black' ? 'white' : 'black'
@@ -113,7 +113,7 @@ export default function App() {
           onMouseDown={beginDraw}
           onMouseMove={updateDraw}
           onMouseUp={endDraw}
-          onMouseLeave={endDraw}
+          //onMouseLeave={endDraw}
 
           onTouchStart={beginDraw}
           onTouchMove={updateDraw}
