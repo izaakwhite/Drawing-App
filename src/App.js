@@ -29,7 +29,7 @@ export default function App() {
     contextReference.current.moveTo(x, y);
     setIsPressed(true);
   };
-  
+
   const updateDraw = (e) => {
     if (!isPressed) return;
     e.preventDefault();
@@ -39,12 +39,22 @@ export default function App() {
     contextReference.current.lineTo(x, y);
     contextReference.current.stroke();
   };
-  
 
   const endDraw = () => {
     contextReference.current.closePath();
     setIsPressed(false);
-    //console.log("TE")
+  };
+
+  const handleMouseEnter = (e) => {
+    // Only continue drawing if the mouse button is still pressed
+    if (e.buttons === 1 && isPressed) {
+      setIsPressed(true);
+    }
+  };
+
+  const handleGlobalMouseUp = () => {
+    // Stop drawing when the mouse button is released anywhere on the document
+    setIsPressed(false);
   };
 
   const handleBrushSizeChange = (e) => {
@@ -84,9 +94,13 @@ export default function App() {
     };
 
     window.addEventListener('resize', resizeCanvas);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
     resizeCanvas();
 
-    return () => window.removeEventListener('resize', resizeCanvas);
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
   }, []);
 
   return (
@@ -109,16 +123,14 @@ export default function App() {
       <div className="canvas-container">
         <canvas
           ref={canvasReference}
-          
           onMouseDown={beginDraw}
           onMouseMove={updateDraw}
           onMouseUp={endDraw}
-          //onMouseLeave={endDraw}
+          onMouseEnter={handleMouseEnter}
 
           onTouchStart={beginDraw}
           onTouchMove={updateDraw}
           onTouchEnd={endDraw}
-          
         />
         <button className="clr-button" onClick={clearCanvas}>
           Clear Drawing
